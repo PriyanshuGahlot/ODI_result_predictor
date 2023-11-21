@@ -35,18 +35,21 @@ for i,j,k,winner,margin,date in zip(data["Team_1"],data["Team_2"],data["Ground"]
     if((i==team1 and j==team2) or (i==team2 and j==team1)):
         if(ground=="Any" or k == ground):
             count += 1
-            allMatches.append(winner+" won by a margin of "+margin+" on "+date+".")
+            allMatches.append(winner+" won by a margin of "+margin+" on "+date+". Match was played in "+k+".")
             if (winner == team1):
                 wins += 1
 
 with left:
     if(team1!="" and team2 != "" and ground != ""):
         sl.write("##")
-        sl.write("Total matches played between {} and {} are {}".format(team1,team2,count))
-        sl.write("Total matches won by {} are {}".format(team1,wins))
         if(count>0):
+            sl.write("Total matches played between {} and {} are {}".format(team1, team2, count))
+            sl.write("Total matches won by {} are {}".format(team1, wins))
             sl.write("Probability of {} winning against {} is {:.3f}".format(team1, team2, wins / count))
+            sl.write("##")
             showBtn = sl.button("Show all Matches")
             if(showBtn):
                 for match in allMatches:
                     sl.markdown("- "+match)
+        else:
+            sl.write("There are no matches played between {} and {} in {}".format(team1,team2,ground))
